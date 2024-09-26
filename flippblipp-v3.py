@@ -1,6 +1,3 @@
-rounds = 40
-
-
 def flippblipp(n):
     if (n%3) == 0 and (n%5) == 0:
         return "flipp blipp"
@@ -13,19 +10,20 @@ def flippblipp(n):
 
 
 #Game
-def rungame(n):
-    print("1")
-    for _ in range(2, n + 1):
-        
+def rungame():
+    n = 1
+    print(n)
+    while True:
+        n +=1
         guess = str(input('Nästa: ')).lower()
-        correctAnswer = flippblipp(_)
+        correctAnswer = flippblipp(n)
         
         if correctAnswer == guess:
             continue
         else:
             print("Fel -", correctAnswer)
-            print("Game over")
-            exit()
-
-
-rungame(rounds)
+            print(); print("Game over")
+            break
+            
+rungame()
+exit()
