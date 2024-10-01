@@ -1,19 +1,19 @@
-def flippblipp(n):
-    if (n%3) == 0 and (n%5) == 0:
+def flippblipp(n): #sekvens 2, abstraktion (bryt ner problemet)
+    if (n%3 == 0 and n%5 == 0): #alternativ
         return "flipp blipp"
-    elif (n%3 == 0 and n%5 != 0):
+    elif (n%3 == 0 and n%5 != 0): #alternativ
         return "flipp"
-    elif (n%3 != 0 and n%5 == 0):
+    elif (n%3 != 0 and n%5 == 0): #alternativ
         return "blipp"
     else:
         return str(n)
 
 
 #Game
-def rungame():
+def rungame(): #sekvens 1
     n = 1
     print(n)
-    while True:
+    while True: #repetition 
         n +=1
         guess = str(input('Nästa: ')).lower()
         correctAnswer = flippblipp(n)
