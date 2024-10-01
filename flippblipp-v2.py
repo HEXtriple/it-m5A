@@ -2,7 +2,7 @@ n = 10
 
 
 def flippblipp(n):
-    if (n%3) == 0 and (n%5) == 0:
+    if (n%3 == 0 and n%5 == 0):
         return "flipp blipp"
     elif (n%3 == 0 and n%5 != 0):
         return "flipp"
