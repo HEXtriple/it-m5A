@@ -6,7 +6,7 @@ def flippblipp(n): #abstraktion,
         return "flipp blipp"
     elif (n%3 == 0 and n%5 != 0): #alternativ
         return "flipp"
-    elif (n%3 != 0 and n%5 == 0): #alternatib
+    elif (n%3 != 0 and n%5 == 0): #alternativ
         return "blipp"
     else:
         return str(n)
