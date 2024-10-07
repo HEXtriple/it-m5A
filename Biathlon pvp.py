@@ -1,6 +1,6 @@
 from random import randint
 
-class Player:
+class Player: #Spelarklass, möjliggör för flera spelare att kunna spela.
     shots = 0
     targets = [1,2,3,4,5]
     odds = 70
@@ -11,7 +11,7 @@ players = []
 numberOfPlayers = 0
 
 
-def selectInput(min,max, type):
+def selectInput(min,max, type): #funktion för att välja ett värde inom ett intervall utan att programmet kraschar (abstraktion)
     selectedTarget = -1
     while(selectedTarget == -1):
         print("Select " + str(type) + ":")
@@ -26,40 +26,42 @@ def selectInput(min,max, type):
             continue
     return selectedTarget
 
-def selectRounds():
+def selectRounds(): #abstraktion
     global shots
     shots = selectInput(1, 10, "rounds")
 
-
-
-def startGame():
-    selectRounds()
+def startGame(): #huvudloop
     global numberOfPlayers
     numberOfPlayers = selectInput(1, 10, "number of players") + 1
-    for _ in range(numberOfPlayers):
+    for _ in range(numberOfPlayers): #lägg till rätt antal spelare i arrayen
         player = Player
         players.append(player)
-    for _ in range(shots):
-        for _ in range(len(players)):
+    for _ in range(shots): #loopa varje runda (repetition)
+        for _ in range(len(players)): #loopa varje spelares tur (repetition)
             p = players[_]
             print("Player " + str(_ + 1))
             target = selectInput(0, len(p.targets), "target")
-            if(p.kollaTraff(p.odds)):
-                p.odds -= 10
+            if(p.kollaTraff(p.odds)): #alterativ
+                p.odds -= 10 #minska sannolikheten för träff
                 if(p.targets[target] == 0):
                     print("Hit on closed target")
                 else:
                     print("Hit")
-                p.targets[target] = 0
+                p.targets[target] = 0 #om träff, sätt värdet på elemetet i arrayen till 0
             else:
                 print("Miss")
-    for _ in range(len(players)):
+
+def printScore():
+    for _ in range(len(players)): #loopa och printa alla spelares poäng
         p = players[_]
         score = ""
         for target in p.targets:
             score +=("O" if target == 0 else "#") + " "
         print(score)
 
+#Sekvens
+selectRounds()
 startGame()
+printScore()
 
 
