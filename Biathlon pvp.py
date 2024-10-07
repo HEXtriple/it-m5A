@@ -1,20 +1,18 @@
 from random import randint
 
+players = []
+
 class Player: #Spelarklass, möjliggör för flera spelare att kunna spela.
-    def __init__(self):
+    def __init__(self): #Initierar en egen instans så att den inte blir statisk, alltså så att alla spelare inte delar samma värden på variabler
         self.shots = 0
         self.targets = [1, 2, 3, 4, 5]
         self.odds = 70
-    def kollaTraff(self, odds):
+    def kollaTraff(self, odds): #self finns för den egna instansen variabler ska användas
         return randint(1,100) <= odds
 
-players = []
-numberOfPlayers = 0
-
-
-def selectInput(min,max, type): #funktion för att välja ett värde inom ett intervall utan att programmet kraschar (abstraktion)
+def selectInput(min, max, type): #funktion för att välja ett värde inom ett intervall utan att programmet kraschar (abstraktion)
     selectedTarget = -1
-    while(selectedTarget == -1):
+    while(selectedTarget == -1): 
         print("Select " + str(type) + ":")
         try:
             selectedTarget = int(input())- 1
@@ -32,7 +30,7 @@ def selectRounds(): #abstraktion
     shots = selectInput(1, 10, "rounds")
 
 def startGame(): #huvudloop
-    global numberOfPlayers
+    numberOfPlayers = 0
     numberOfPlayers = selectInput(1, 10, "number of players") + 1
     for _ in range(numberOfPlayers): #lägg till rätt antal spelare i arrayen
         player = Player()
@@ -58,7 +56,7 @@ def printScore():
         score = ""
         for target in p.targets:
             score +=("O" if target == 0 else "#") + " "
-        print("Player" + str(_+1) + " " + score)
+        print("Player" , str(_+1) + " : " + score)
 
 #Sekvens
 selectRounds()
