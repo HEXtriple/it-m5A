@@ -1,10 +1,11 @@
 from random import randint
 
 class Player: #Spelarklass, möjliggör för flera spelare att kunna spela.
-    shots = 0
-    targets = [1,2,3,4,5]
-    odds = 70
-    def kollaTraff(odds):
+    def __init__(self):
+        self.shots = 0
+        self.targets = [1, 2, 3, 4, 5]
+        self.odds = 70
+    def kollaTraff(self, odds):
         return randint(1,100) <= odds
 
 players = []
@@ -34,7 +35,7 @@ def startGame(): #huvudloop
     global numberOfPlayers
     numberOfPlayers = selectInput(1, 10, "number of players") + 1
     for _ in range(numberOfPlayers): #lägg till rätt antal spelare i arrayen
-        player = Player
+        player = Player()
         players.append(player)
     for _ in range(shots): #loopa varje runda (repetition)
         for _ in range(len(players)): #loopa varje spelares tur (repetition)
@@ -57,7 +58,7 @@ def printScore():
         score = ""
         for target in p.targets:
             score +=("O" if target == 0 else "#") + " "
-        print(score)
+        print("Player" + str(_+1) + " " + score)
 
 #Sekvens
 selectRounds()
