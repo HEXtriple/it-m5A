@@ -19,7 +19,7 @@ def selectInput(min, max, type): #funktion för att välja ett värde inom ett i
         except:
             print("Invalid input")
             continue
-        if(selectedTarget < min or selectedTarget > max):
+        if(selectedTarget < min or selectedTarget >= max):
             selectedTarget = -1
             print("Invalid input")
             continue
