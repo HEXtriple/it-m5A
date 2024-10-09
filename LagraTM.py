@@ -93,11 +93,18 @@ def action(user):
             itemToAdd = input(">")
             user.add_item(itemToAdd)
         case "2":
-            itemToRemove = user.lager[int(input("Index of item: ")) - 1]
+            index = int(input("Index of item: ")) - 1
+            if(index < 0 or index >= len(user.lager)):
+                print("Invalid index")
+                return
+            itemToRemove = user.lager[index]
             user.remove_item(itemToRemove)
         case "3":
             global current_user
             current_user = None
+        case "_":
+            print("Invalid input")
+
     print("---------------------")
         
 
