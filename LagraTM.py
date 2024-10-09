@@ -1,3 +1,5 @@
+import time as t
+import os
 class User:
     def __init__(self, name, psswd):
         self.name = name
@@ -14,7 +16,7 @@ class User:
         def __str__(self):
             return f"Namn: {self.name}, Lager: {self.lager}"
     def return_details(self):
-        return f"User: ({self.name}, Psswd {self.psswd})"
+        return f"User: {self.name}, Psswd: {self.psswd}"
     def return_lager(self):
         return self.lager
 
@@ -33,24 +35,16 @@ def start_page():
     print("q) Quit")
     while True:
         choice = input("> ")
-        if int(choice) == 1:
-            return 1
-        elif choice == "q":
-            quit()
-        elif int(choice) == 2:
-            return
-        else:
-            print("please enter valid input")
+        match choice:
+            case "1":
+                return 1
+            case "2":
+                return
+            case "q":
+                quit()
+            case "_":
+                print("Please enter valid input")
         
-
-'''
-def login_input(): 
-    try:
-        int(user_input)
-        continue
-    except:
-        print("Invalid input")
-        continue '''
 def login():
     print("---------------")
     print("Please enter details")
@@ -70,6 +64,10 @@ def login():
            
         else:
             continue
+    print()
+    print("Unable to find user")
+    t.sleep(2)
+    os.system('clear')
 
 
 def create_account():
