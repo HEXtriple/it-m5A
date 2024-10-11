@@ -5,18 +5,19 @@ class User:
         self.name = name
         self.psswd = psswd
         self.lager = []
-    def kolla_upgifter(self, input_name, input_psswd):
+
+    def check_user_details(self, input_name, input_psswd):
         return True if self.name == input_name and self.psswd == input_psswd else False
+
     def add_item(self, vara):
         self.lager.append(vara)
-        def __str__(self):
-            return f"Namn: {self.name}, Lager: {self.lager}"
+
     def remove_item(self, vara):
         self.lager.remove(vara)
-        def __str__(self):
-            return f"Namn: {self.name}, Lager: {self.lager}"
+
     def return_details(self):
         return f"User: {self.name}, Psswd: {self.psswd}"
+        
     def return_lager(self):
         return self.lager
 
@@ -42,7 +43,7 @@ def start_page():
                 return
             case "q":
                 quit()
-            case "_":
+            case _:
                 print("Please enter valid input")
         
 def login():
@@ -53,7 +54,7 @@ def login():
     for user in users:
         if user_name == user.name:
             while True:
-                check = user.kolla_upgifter(user_name, user_passwd)
+                check = user.check_user_details(user_name, user_passwd)
                 if check:
                     print(f"Välkommen {user.name}")
                     return user
@@ -100,7 +101,7 @@ def action(user):
         case "3":
             global current_user
             current_user = None
-        case "_":
+        case _:
             print("Invalid input")
 
     print("---------------------")
@@ -119,8 +120,7 @@ def enter_lager(user):
 def system():
     global current_user
     current_user = None
-    system_is_running = True
-    while system_is_running:
+    while True:
         if current_user != None:
             enter_lager(current_user)
         else:
