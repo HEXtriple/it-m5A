@@ -40,13 +40,18 @@ def updateDisplay():
 
 
 def confirmOrder():
-    while(len(cart) != 0):
-        foo_rstout = cart.popleft()
+    if len(cart) == 0:
+        return
+    foo_rstout = cart.popleft()
+    #kör funktionen en gång i taget rekursivt istället för loop
+    def update_label():
         bar = readyLabel.cget("text")
         bar += foo_rstout.name + "\n"
-        readyLabel.after(foo_rstout.time * 1000, readyLabel.config(text=bar))
+        readyLabel.config(text=bar)
         updateDisplay()
-        
+        # näste item
+        confirmOrder()
+    readyLabel.after(foo_rstout.time * 1000, update_label)
         
 def system():
     for i in menu:
