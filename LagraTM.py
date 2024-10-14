@@ -6,9 +6,11 @@ class User:
         self.psswd = psswd
         self.lager = []
 
+    #Kollar användardetaljer i självaste klassen för att inte behöva exponera alla användares lösenord när systemet kolla inlogg
     def check_user_details(self, input_name, input_psswd):
         return True if self.name == input_name and self.psswd == input_psswd else False
 
+    #Flertal abstraktioner så att dessa kan testas enskilt, samt tillåter upprepade användningar
     def add_item(self, vara):
         self.lager.append(vara)
 
@@ -21,6 +23,7 @@ class User:
     def return_lager(self):
         return self.lager
 
+#Här läggs en test användare till, som instruktionerna velat ha vid testning
 test_user = User("NisseNisseNils", "123")
 test_user.lager.append("Gurka")
 users = []
@@ -46,22 +49,28 @@ def start_page():
             case _:
                 print("Please enter valid input")
         
+#Går igenom  listan med personer och kollar först om namnet stämmer överens med listans namn, och sedan om id och lösen stämmer
 def login():
     print("---------------")
     print("Please enter details")
     user_name = str(input("User: "))
-    user_passwd = str(input("Password: "))   
+    user_passwd = str(input("Password: "))  
     for user in users:
         if user_name == user.name:
-            while True:
+            # Tillåter några försök med med lösenordet 
+            i = 1
+            while i < 3:
                 check = user.check_user_details(user_name, user_passwd)
                 if check:
                     print(f"Välkommen {user.name}")
                     return user
                 else: 
-                    print("password incorrect")
+                    i +=1
+                    print(f"password incorrect, you have {4-i} tries left")
                     user_passwd = str(input("Re-enter password: "))
                     continue
+            print("To many wrong tries")
+            return None
            
         else:
             continue
@@ -69,8 +78,9 @@ def login():
     print("Unable to find user")
     t.sleep(2)
     os.system('clear')
+    return None
 
-
+# Abstraktion, egen funktion för skapandet av nya konton
 def create_account():
     print("---------------")
     print("Please enter details")
@@ -80,7 +90,8 @@ def create_account():
     users.append(new_user)
     print(new_user.return_details(), "has been created")
 
-
+#SAR A-Alternativ, låter användaren välja mellan förutsatta funktioner som interagerar med klassen
+# "switch case" eller match-case användes för selektoren då det bara är en simpel input
 def action(user):
     print("Select an action")
     print("1) Add item")
@@ -93,7 +104,7 @@ def action(user):
             user.add_item(itemToAdd)
         case "2":
             index = int(input("Index of item: ")) - 1
-            if(index < 0 or index >= len(user.lager)):
+            if(index < 0 or index >= len(user.lager)): #Kollar så att man inte väljer ett objekt som inte är inom arrayen
                 print("Invalid index")
                 return
             itemToRemove = user.lager[index]
@@ -117,6 +128,7 @@ def enter_lager(user):
     print("-------------------")
     action(user)
 
+#Driftsatt system med en while loop för oändlig körning, inget basfall då funktionen quit() används för att stänga programmet
 def system():
     global current_user
     current_user = None
