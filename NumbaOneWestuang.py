@@ -2,11 +2,6 @@ import tkinter as tk
 import time as t
 from collections import deque
 
-root = tk.Tk()
-root.title("NumbaOneWestuang")
-
-label = tk.Label(root, text="Welcome to NumbaOneWestuang")
-label.pack(pady=10)
 
 class MenuItem:
     def __init__(self, n, p, t):
@@ -14,6 +9,10 @@ class MenuItem:
         self.price = p
         self.time = t
 
+root = tk.Tk()
+root.title("NumbaOneWestuang")
+label = tk.Label(root, text="Welcome to NumbaOneWestuang")
+label.pack(pady=10)
 burger = MenuItem("burger", 100, 3)
 cheeseburger = MenuItem("cheeseburger", 110, 5)
 menu = {burger, cheeseburger}
@@ -36,8 +35,6 @@ def updateDisplay():
             order += i.name + "(" + str(count) + ") "
             price += i.price * count
     cartLabel.config(text=order + " \nTotal: " + str(price)+ " ")
-
-
 
 def confirmOrder():
     if len(cart) == 0:
