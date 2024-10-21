@@ -1,21 +1,28 @@
 import tkinter as tk
-import time as t
 from collections import deque
-
+import csv
 
 class MenuItem:
     def __init__(self, n, p, t):
         self.name = n
         self.price = p
         self.time = t
+        
 
 root = tk.Tk()
 root.title("NumbaOneWestuang")
 label = tk.Label(root, text="Welcome to NumbaOneWestuang")
 label.pack(pady=10)
-burger = MenuItem("burger", 100, 3)
-cheeseburger = MenuItem("cheeseburger", 110, 5)
-menu = {burger, cheeseburger}
+
+menu = []
+with open('menu.csv', mode='r') as file:
+    reader = csv.reader(file)    
+    for row in reader:
+        print(row)
+        item = MenuItem(str(row[0]), int(row[1]), int(row[2]))
+        menu.append(item)
+
+
 cart = deque()
 cartLabel = tk.Label(root, text="Cart: ")
 cartLabel.pack(pady=10)
@@ -37,14 +44,14 @@ def updateDisplay():
     cartLabel.config(text=order + " \nTotal: " + str(price)+ " ")
 
 def confirmOrder():
-    if len(cart) == 0:
+    if len(cart) == 0: #basfall
         return
     foo_rstout = cart.popleft()
     #kör funktionen en gång i taget rekursivt istället för loop
     def update_label():
         bar = readyLabel.cget("text")
         bar += foo_rstout.name + "\n"
-        readyLabel.config(text=bar)
+        readyLabel.config(text= bar)
         updateDisplay()
         # näste item
         confirmOrder()
