@@ -1,5 +1,4 @@
 import tkinter as tk
-from collections import deque
 import csv
 
 class MenuItem:
@@ -7,7 +6,17 @@ class MenuItem:
         self.name = n
         self.price = p
         self.time = t
-        
+
+#Abstraktion, separat funktion för FIFO kö
+class Queue:
+    def __init__(self):
+        self.queue = []
+
+    def enqueue(self, item):
+        self.queue.append(item)
+
+    def dequeue(self):
+        return self.queue.pop(0)
 
 root = tk.Tk()
 root.title("NumbaOneWestuang")
@@ -23,39 +32,40 @@ with open('menu.csv', mode='r') as file:
         menu.append(item)
 
 
-cart = deque()
+cart = Queue() #Skapar en ny FIFO kö
 cartLabel = tk.Label(root, text="Cart: ")
 cartLabel.pack(pady=10)
 readyLabel = tk.Label(root, text="Pickup ready: \n")
 readyLabel.pack(pady=10)
 
 def addItem(item):
-    cart.append(item)
+    cart.enqueue(item)
     updateDisplay()
 
 def updateDisplay():
     order = "Cart: "
     price = 0
     for i in menu:
-        count = cart.count(i)
+        count = cart.queue.count(i)
         if(count > 0):
             order += i.name + "(" + str(count) + ") "
             price += i.price * count
     cartLabel.config(text=order + " \nTotal: " + str(price)+ " ")
 
+#Rekursiv funktion
 def confirmOrder():
-    if len(cart) == 0: #basfall
+    if len(cart.queue) == 0: #basfall
         return
-    foo_rstout = cart.popleft()
+    foo = cart.dequeue()
     #kör funktionen en gång i taget rekursivt istället för loop
     def update_label():
         bar = readyLabel.cget("text")
-        bar += foo_rstout.name + "\n"
+        bar += foo.name + "\n"
         readyLabel.config(text= bar)
         updateDisplay()
         # näste item
         confirmOrder()
-    readyLabel.after(foo_rstout.time * 1000, update_label)
+    readyLabel.after(foo.time * 1000, update_label)
         
 def system():
     for i in menu:
